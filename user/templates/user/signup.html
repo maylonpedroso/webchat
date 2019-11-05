@@ -1,0 +1,16 @@
+{% extends 'core/layout.html' %}
+{% block title %}Sign Up{% endblock title %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="form-group">
+        {{ field.label_tag }}
+        {{ field }}
+    </div>
+    {% endfor %}
+    {{ form.errors }}
+    <button type="submit" class="btn btn-primary">Sign Up</button>
+    <p>Already have an account? <a href="{% url 'user:login' %}">Log in!</a></p>
+</form>
+{% endblock content %}

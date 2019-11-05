@@ -1,0 +1,89 @@
+{% extends 'core/layout.html' %}
+{% block content %}
+<div class="row">
+    <div id="users" class="col-md-2"></div>
+    <div id="chat" class="col-md-10">
+        <div class="row" id="chat-log">
+            {% for message in latest_messages %}
+                {% if user.username == message.username %}
+                    <div class="col-8 offset-4">
+                        <div class="alert alert-success">
+                            <b>{{ message.username }}</b>
+                            <small class="text-muted">{{ message.created_at }}</small>
+                            <p>{{ message.content }}</p>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col-8">
+                        <div class="alert alert-primary">
+                            <b>{{ message.username }}</b>
+                            <small class="text-muted">{{ message.created_at }}</small>
+                            <p>{{ message.content }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div id="chat-message-area" class="col-md-12">
+            <div class="form-row align-items-center">
+                <div class="col-auto my-1">
+                    <textarea id="chat-message-text"></textarea>
+                </div>
+                <div class="col-auto my-1">
+                  <button id="chat-message-send" type="submit" class="btn btn-lg btn-primary">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js_scripts %}
+<script>
+    var roomName = '{{ room_name }}';
+    var username = '{{ user.username }}';
+
+    var chatSocket = new WebSocket(
+        'ws://' + window.location.host + '/ws/chat/' + roomName + '/');
+
+    chatSocket.onmessage = function(e) {
+        var data = JSON.parse(e.data);
+        if(username == data['username']) {
+            $('#chat-log').append(
+                '<div class="col-8 offset-4"><div class="alert alert-success"><b>'
+                + data['username'] + '</b> <small class="text-muted">' + data['datetime']
+                + '</small><p>' + data['message'] + '</p></div></div>'
+            );
+        } else {
+            $('#chat-log').append(
+                '<div class="col-8"><div class="alert alert-primary"><b>'
+                + data['username'] + '</b> <small class="text-muted">' + data['datetime']
+                + '</small><p>' + data['message'] + '</p>'
+            );
+        }
+    };
+
+    chatSocket.onclose = function(e) {
+        console.log(e);
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    $('#chat-message-text').focus();
+    $('#chat-message-text').keyup(function(e) {
+        if (e.keyCode === 13) {  // enter, return
+            $('#chat-message-send').click();
+        }
+    });
+
+    $('#chat-message-send').click(function(e) {
+        var messageInputDom = $('#chat-message-text');
+        if(messageInputDom.val() !== '') {
+            chatSocket.send(JSON.stringify({
+                'message': messageInputDom.val()
+            }));
+            messageInputDom.val('');
+            $('#chat-message-text').focus();
+        }
+    });
+</script>
+{% endblock js_scripts %}
