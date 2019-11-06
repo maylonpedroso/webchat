@@ -1,10 +1,10 @@
 import json
+from datetime import datetime
 
 from asgiref.sync import sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
 from django.contrib.auth.models import User
 
-from chat import bots
 from chat.models import ChatMessage, ChatRoom
 
 
@@ -35,20 +35,19 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data=None, bytes_data=None):
         if text_data:
             message = json.loads(text_data).get('message', '')
-            chat_message = ChatMessage(
-                content=message, room=self.room, username=self.user.username
-            )
-            await sync_to_async(chat_message.save)()
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
                     'type': 'chat_message',
                     'message': message,
-                    'datetime': chat_message.created_at.strftime("%m/%d/%Y, %H:%M:%S"),
+                    'datetime': datetime.now().strftime("%m/%d/%Y, %H:%M:%S"),
                     'username': self.user.username,
                 }
             )
-            await bots.notify_bots(message)
+            chat_message = ChatMessage(
+                content=message, room=self.room, username=self.user.username
+            )
+            await sync_to_async(chat_message.save)()
 
     async def chat_message(self, event):
         await self.send(text_data=json.dumps({

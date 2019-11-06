@@ -11,6 +11,5 @@ def room_view(request):
     messages = ChatMessage.objects.filter(room=room.pk).order_by('-created_at')[:50]
     return render(request, 'chat/room.html', {
         'room_name': room_name,
-        'latest_messages': messages,
+        'latest_messages': reversed(messages),
     })
-
