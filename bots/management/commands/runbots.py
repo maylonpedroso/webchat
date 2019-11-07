@@ -1,6 +1,5 @@
 import asyncio
 
-from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from channels_redis.core import RedisChannelLayer
 from django.core.management.base import BaseCommand
@@ -20,6 +19,7 @@ class Command(BaseCommand):
         loop.run_until_complete(asyncio.gather(
             *(self.group_processor(f'chat_{room.name}') for room in ChatRoom.objects.all())
         ))
+        self.stderr.write(self.style.WARNING(f'There are no rooms available'))
 
     async def group_processor(self, group_name):
         self.stdout.write(self.style.SUCCESS(f'Start listening to "{group_name}" room'))
