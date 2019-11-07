@@ -2,7 +2,7 @@
 
 This web chat application was created using django channels. 
 Also includes a management command to link available chat bots to all 
-already existent rooms. 
+already existent rooms.
 
 ### Requirements
  * Python 3.6+
@@ -26,7 +26,7 @@ cd webchat
 #### Setup a virtual environment
 ```bash
 python3 -m venv venv
-source venv/bin/activete
+source venv/bin/activate
 ```
 
 #### Run the migrations to create the local DB
@@ -47,7 +47,7 @@ Go to [http://127.0.0.1:8000]() and check the webchat
 ```bash
 ./manage.py runbots
 ```
-**Important:** If a new chat room is created the `runbots` need to be restarted 
+**Important:** If a new chat room is created the `runbots` command needs to be restarted 
 
 ### Running the tests
 ```
