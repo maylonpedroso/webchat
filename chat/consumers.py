@@ -1,7 +1,8 @@
 import json
+import re
 from datetime import datetime
 
-from asgiref.sync import sync_to_async
+from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
 from django.contrib.auth.models import User
 
@@ -17,7 +18,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         room_name: str = self.scope['url_route']['kwargs']['room_name']
         self.user: User = self.scope['user']
         if self.user.is_authenticated:
-            self.room = await sync_to_async(ChatRoom.objects.get)(name=room_name)
+            self.room = await database_sync_to_async(ChatRoom.objects.get)(name=room_name)
             self.room_group_name = f'chat_{room_name}'
             await self.channel_layer.group_add(
                 self.room_group_name, self.channel_name
@@ -44,10 +45,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     'username': self.user.username,
                 }
             )
-            chat_message = ChatMessage(
-                content=message, room=self.room, username=self.user.username
-            )
-            await sync_to_async(chat_message.save)()
+            # Skip bot commands form saving
+            if not re.match(r'^/\w+', message):
+                chat_message = ChatMessage(
+                    content=message, room=self.room, username=self.user.username
+                )
+                await database_sync_to_async(chat_message.save)()
 
     async def chat_message(self, event):
         await self.send(text_data=json.dumps({
