@@ -19,7 +19,7 @@ class Command(BaseCommand):
         loop.run_until_complete(asyncio.gather(
             *(self.group_processor(f'chat_{room.name}') for room in ChatRoom.objects.all())
         ))
-        self.stderr.write(self.style.WARNING(f'There are no rooms available'))
+        self.stderr.write(self.style.WARNING('There are no rooms available'))
 
     async def group_processor(self, group_name):
         self.stdout.write(self.style.SUCCESS(f'Start listening to "{group_name}" room'))

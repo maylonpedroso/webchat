@@ -2,3 +2,6 @@ Django
 channels
 channels_redis
 requests
+
+# dev deps
+flake8
