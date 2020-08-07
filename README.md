@@ -14,7 +14,7 @@ already existent rooms.
 This project is setup to use a channel layer with Redis backend. If you don't have
 redis-server on port 6379 an easy way of get it running is with docker.
 ```bash
-docker -d -p 6379:6379 redis:latest
+docker run -d -p 6379:6379 redis:latest
 ```
 
 #### Clone this repo and `cd` into it
