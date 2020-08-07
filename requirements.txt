@@ -33,4 +33,4 @@ Twisted==19.7.0
 txaio==18.8.1
 urllib3==1.25.10
 zipp==3.1.0
-zope.interface==4.6.0
+zope.interface==5.1.0
