@@ -1,0 +1,21 @@
+version: 2
+updates:
+- package-ecosystem: pip
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "10:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: asgiref
+    versions:
+    - 3.3.2
+  - dependency-name: pyflakes
+    versions:
+    - 2.3.0
+  - dependency-name: autobahn
+    versions:
+    - 21.2.2
+  - dependency-name: cffi
+    versions:
+    - 1.14.5
