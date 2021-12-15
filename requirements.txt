@@ -10,7 +10,7 @@ channels==3.0.4
 channels-redis==3.3.1
 chardet==4.0.0
 constantly==15.1.0
-cryptography==35.0.0
+cryptography==36.0.1
 daphne==3.0.2
 Django==3.2.8
 flake8==3.9.2
