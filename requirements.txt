@@ -17,7 +17,7 @@ flake8==3.9.2
 hiredis==2.0.0
 hyperlink==21.0.0
 idna==3.3
-importlib-metadata==4.8.1
+importlib-metadata==4.10.0
 incremental==21.3.0
 mccabe==0.6.1
 msgpack==1.0.2
