@@ -20,7 +20,7 @@ idna==3.3
 importlib-metadata==4.11.4
 incremental==21.3.0
 mccabe==0.6.1
-msgpack==1.0.3
+msgpack==1.0.4
 pycodestyle==2.7.0
 pycparser==2.21
 pyflakes==2.3.1
