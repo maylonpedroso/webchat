@@ -6,7 +6,7 @@ autobahn==22.5.1
 Automat==20.2.0
 certifi==2022.6.15
 cffi==1.15.0
-channels==3.0.4
+channels==3.0.5
 channels-redis==3.4.0
 chardet==4.0.0
 constantly==15.1.0
