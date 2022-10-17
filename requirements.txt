@@ -18,7 +18,7 @@ hiredis==2.0.0
 hyperlink==21.0.0
 idna==3.4
 importlib-metadata==4.12.0
-incremental==21.3.0
+incremental==22.10.0
 mccabe==0.6.1
 msgpack==1.0.4
 pycodestyle==2.7.0
