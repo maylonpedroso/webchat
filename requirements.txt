@@ -23,7 +23,7 @@ mccabe==0.6.1
 msgpack==1.0.4
 pycodestyle==2.7.0
 pycparser==2.21
-pyflakes==2.3.1
+pyflakes==3.0.0
 PyHamcrest==2.0.4
 pytz==2022.6
 requests==2.28.1
